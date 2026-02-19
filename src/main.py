@@ -1,4 +1,3 @@
-from apify_client import ApifyClient
 from apify import Actor
 import asyncio
 import os
@@ -12,8 +11,7 @@ async def main():
         # Get input
         actor_input = await Actor.get_input() or {}
         
-        # Set environment variable to signal we are in Apify
-        os.environ["APIFY_RUNNING"] = "true"
+        # Environment variable is now set in Dockerfile
         
         print("Starting IPO Bot on Apify...")
         
