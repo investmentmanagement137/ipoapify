@@ -38,10 +38,16 @@ def convert_csv_to_apify_input():
                 # Filter out empty keys if schema is strict, but schema allows these
                 input_data["accounts"].append(account)
                 
+        # 1. Full Input File (Object)
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
             json.dump(input_data, f, indent=4)
+            
+        # 2. Array Only File (For pasting into "Accounts" field directly)
+        ARRAY_FILE = OUTPUT_FILE.replace(".json", "_array.json")
+        with open(ARRAY_FILE, 'w', encoding='utf-8') as f:
+            json.dump(input_data["accounts"], f, indent=4)
         
-        print(f"Successfully created {OUTPUT_FILE} with {len(input_data['accounts'])} accounts.")
+        print(f"Successfully created {OUTPUT_FILE} and {ARRAY_FILE} with {len(input_data['accounts'])} accounts.")
 
     except Exception as e:
         print(f"An error occurred: {e}")
