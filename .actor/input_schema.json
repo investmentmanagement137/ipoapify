@@ -56,12 +56,5 @@
                     }
                 }
             }
-        },
-        "check_interval": {
-            "title": "Check Interval (Hours)",
-            "type": "integer",
-            "description": "Interval between checks (only relevant if running as a service)",
-            "default": 48
         }
     }
-}
