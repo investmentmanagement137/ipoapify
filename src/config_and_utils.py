@@ -57,6 +57,8 @@ ACCOUNTS = load_accounts()
 
 def update_account_status(username, key, value):
     """Update status in CSV. For simplicity, we write to the 'Status' column or just log."""
+    if os.environ.get("APIFY_RUNNING") == "true":
+        return # Skip CSV update on Apify
     try:
         temp_accounts = []
         updated = False
@@ -79,6 +81,8 @@ def update_account_status(username, key, value):
 
 def save_account_banks(username, banks_list):
     """Save the list of available banks to accounts.csv for a specific user."""
+    if os.environ.get("APIFY_RUNNING") == "true":
+        return # Skip CSV update on Apify
     try:
         temp_accounts = []
         updated = False

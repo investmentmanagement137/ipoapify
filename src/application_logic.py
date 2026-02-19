@@ -31,7 +31,7 @@ async def setup_toast_monitor(page, account, company_name, boid, url):
         if not clean_text: return
         log(f"[{account['name']}] TOAST: {clean_text}")
         if "successfully" in clean_text.lower():
-            save_completion(account['name'], account['username'], boid, company_name, url)
+            await save_completion(account['name'], account['username'], boid, company_name, url)
             update_account_status(account['username'], "pin_correct", True)
         
         if "wrong transaction pin" in clean_text.lower():
@@ -118,7 +118,7 @@ async def apply_process(page, account, ipo):
         # 2. Check State
         if "/asba/edit/" in page.url:
             log(f"{ipo['company']} already applied (Edit mode). Skipping.")
-            save_completion(account['name'], account['username'], "", ipo['company'], ipo['url'])
+            await save_completion(account['name'], account['username'], "", ipo['company'], ipo['url'])
             return
 
         # 3. Bank and Account Selection
@@ -139,7 +139,7 @@ async def apply_process(page, account, ipo):
                     valid_list.append({"text": safe_text, "value": v})
             
             # Save banks to CSV
-            from utils import save_account_banks
+            from config_and_utils import save_account_banks
             save_account_banks(account['username'], valid_list)
 
             # Match Bank

@@ -13,13 +13,33 @@ def is_already_completed(username, company_name):
     except: 
         return False
 
-def save_completion(account_name, username, boid, company_name, url):
+async def save_completion(account_name, username, boid, company_name, url):
     file_exists = os.path.exists(COMPLETED_FILE)
     fieldnames = ['Name', 'Username', 'BOID', 'Company', 'URL', 'Applied At']
     
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    record = {
+        'Name': account_name,
+        'Username': username,
+        'BOID': boid,
+        'Company': company_name,
+        'URL': url,
+        'Applied At': timestamp
+    }
+
+    # 1. Apify Output
+    if os.environ.get("APIFY_RUNNING") == "true":
+        try:
+            from apify import Actor
+            await Actor.push_data(record)
+            log(f"SUCCESS: {account_name} record pushed to Apify Dataset.")
+        except Exception as e:
+            log(f"Error pushing to Apify: {e}")
+
+    # 2. Local CSV Output (Skip checks if on Apify since ephemeral)
     try:
-        # Check if already exists to prevent duplicate rows in CSV
-        if is_already_completed(username, company_name):
+        # Check if already exists to prevent duplicate rows in CSV (Local only)
+        if os.environ.get("APIFY_RUNNING") != "true" and is_already_completed(username, company_name):
             return
 
         with open(COMPLETED_FILE, mode='a', encoding='utf-8-sig', newline='') as f:
@@ -27,17 +47,14 @@ def save_completion(account_name, username, boid, company_name, url):
             if not file_exists:
                 writer.writeheader()
             
-            writer.writerow({
-                'Name': account_name,
-                'Username': username,
-                'BOID': boid,
-                'Company': company_name,
-                'URL': url,
-                'Applied At': time.strftime("%Y-%m-%d %H:%M:%S")
-            })
-        log(f"SUCCESS: {account_name} record saved for {company_name}.")
+            writer.writerow(record)
+        
+        if os.environ.get("APIFY_RUNNING") != "true":
+             log(f"SUCCESS: {account_name} record saved for {company_name}.")
     except Exception as e:
-        log(f"Error saving history to CSV: {e}")
+        # On Apify, CSV errors are expected if not found, suppress them or log debug
+        if os.environ.get("APIFY_RUNNING") != "true":
+            log(f"Error saving history to CSV: {e}")
 
 def get_applied_list():
     if not os.path.exists(COMPLETED_FILE):
