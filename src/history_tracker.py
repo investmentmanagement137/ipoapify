@@ -13,7 +13,7 @@ def is_already_completed(username, company_name):
     except: 
         return False
 
-async def save_completion(account_name, username, boid, company_name, url):
+async def save_completion(account_name, username, boid, company_name, url, crn=None, active=True, selected_bank=None, available_banks=None):
     file_exists = os.path.exists(COMPLETED_FILE)
     fieldnames = ['Name', 'Username', 'BOID', 'Company', 'URL', 'Applied At']
     
@@ -24,7 +24,11 @@ async def save_completion(account_name, username, boid, company_name, url):
         'BOID': boid,
         'Company': company_name,
         'URL': url,
-        'Applied At': timestamp
+        'Applied At': timestamp,
+        'CRN': crn,
+        'Active': active,
+        'Selected Bank': selected_bank,
+        'Available Banks': available_banks
     }
 
     # 1. Apify Output

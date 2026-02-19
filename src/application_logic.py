@@ -31,7 +31,18 @@ async def setup_toast_monitor(page, account, company_name, boid, url):
         if not clean_text: return
         log(f"[{account['name']}] TOAST: {clean_text}")
         if "successfully" in clean_text.lower():
-            await save_completion(account['name'], account['username'], boid, company_name, url)
+        if "successfully" in clean_text.lower():
+            await save_completion(
+                account['name'], 
+                account['username'], 
+                boid, 
+                company_name, 
+                url,
+                crn=account.get('crn'),
+                active=account.get('active', True),
+                selected_bank=account.get('selected_bank_name'),
+                available_banks=account.get('available_banks_list')
+            )
             update_account_status(account['username'], "pin_correct", True)
         
         if "wrong transaction pin" in clean_text.lower():
@@ -118,7 +129,20 @@ async def apply_process(page, account, ipo):
         # 2. Check State
         if "/asba/edit/" in page.url:
             log(f"{ipo['company']} already applied (Edit mode). Skipping.")
-            await save_completion(account['name'], account['username'], "", ipo['company'], ipo['url'])
+        if "/asba/edit/" in page.url:
+            log(f"{ipo['company']} already applied (Edit mode). Skipping.")
+            await save_completion(
+                account['name'], 
+                account['username'], 
+                "", 
+                ipo['company'], 
+                ipo['url'],
+                crn=account.get('crn'),
+                active=account.get('active', True),
+                selected_bank="Already Applied (N/A)",
+                available_banks=[]
+            )
+            return
             return
 
         # 3. Bank and Account Selection
@@ -136,7 +160,15 @@ async def apply_process(page, account, ipo):
                 t = (await opt.inner_text()).strip().replace("\n", " ").replace("\r", " ")
                 if v:
                     safe_text = t.encode('ascii', 'ignore').decode('ascii')
+            for opt in options:
+                v = await opt.get_attribute("value")
+                t = (await opt.inner_text()).strip().replace("\n", " ").replace("\r", " ")
+                if v:
+                    safe_text = t.encode('ascii', 'ignore').decode('ascii')
                     valid_list.append({"text": safe_text, "value": v})
+            
+            # Store for output
+            account['available_banks_list'] = [b['text'] for b in valid_list]
             
             # Save banks to CSV
             from config_and_utils import save_account_banks
@@ -146,12 +178,18 @@ async def apply_process(page, account, ipo):
             for item in valid_list:
                 if account['bank_name'].lower() in item['text'].lower() or ("nic asia" in account['bank_name'].lower() and "nic asia" in item['text'].lower()):
                     val = item['value']
+                if account['bank_name'].lower() in item['text'].lower() or ("nic asia" in account['bank_name'].lower() and "nic asia" in item['text'].lower()):
+                    val = item['value']
                     log(f"Matched Bank: {item['text']}")
+                    account['selected_bank_name'] = item['text']
                     break
             
             if not val and valid_list:
                 val = valid_list[0]['value']
+            if not val and valid_list:
+                val = valid_list[0]['value']
                 log(f"Fallback to first bank: {valid_list[0]['text']}")
+                account['selected_bank_name'] = valid_list[0]['text']
 
             if val:
                 await page.select_option("#selectBank", value=val)
