@@ -31,7 +31,6 @@ async def setup_toast_monitor(page, account, company_name, boid, url):
         if not clean_text: return
         log(f"[{account['name']}] TOAST: {clean_text}")
         if "successfully" in clean_text.lower():
-        if "successfully" in clean_text.lower():
             await save_completion(
                 account['name'], 
                 account['username'], 
