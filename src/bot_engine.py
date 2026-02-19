@@ -1,7 +1,8 @@
 import asyncio
 import traceback
 from playwright.async_api import async_playwright
-from config_and_utils import ACCOUNTS, log
+import config_and_utils
+from config_and_utils import log
 from history_tracker import is_already_completed
 from ipo_discovery import discover_available_ipos
 from application_logic import login, apply_process, setup_toast_monitor
@@ -13,7 +14,7 @@ async def main(headless=False):
         log("Running in HEADLESS mode.")
     
     # Filter active accounts
-    active_accounts = [a for a in ACCOUNTS if a.get("active", True)]
+    active_accounts = [a for a in config_and_utils.ACCOUNTS if a.get("active", True)]
     if not active_accounts:
         log("No active accounts found in accounts.csv")
         return
