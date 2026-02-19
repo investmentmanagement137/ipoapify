@@ -1,0 +1,49 @@
+{
+    "title": "Input Schema",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "accounts": {
+            "title": "Accounts",
+            "type": "array",
+            "description": "List of accounts to use for applying.",
+            "editor": "json",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "crn": {
+                        "type": "string"
+                    },
+                    "pin": {
+                        "type": "string"
+                    },
+                    "dp_id": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "default": true
+                    }
+                }
+            }
+        },
+        "check_interval": {
+            "title": "Check Interval (Hours)",
+            "type": "integer",
+            "description": "Interval between checks (only relevant if running as a service)",
+            "default": 48
+        }
+    }
+}

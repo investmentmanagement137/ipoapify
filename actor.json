@@ -1,0 +1,9 @@
+{
+    "actorSpecification": 1,
+    "name": "ipo-applier-bot",
+    "title": "IPO Applier Bot",
+    "description": "Automatically applies for IPOs on Meroshare.",
+    "version": "1.0",
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}
