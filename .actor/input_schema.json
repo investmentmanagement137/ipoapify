@@ -7,7 +7,6 @@
             "title": "Accounts",
             "type": "array",
             "description": "List of accounts to use for applying.",
-            "editor": "json",
             "items": {
                 "type": "object",
                 "title": "Account",
