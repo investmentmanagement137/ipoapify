@@ -1,0 +1,18 @@
+# Sensitive Data
+accounts.csv
+banks_*.json
+*.log
+history.csv
+last_run.timestamp
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# IDEs
+.vscode/
+.idea/
