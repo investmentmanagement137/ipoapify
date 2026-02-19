@@ -7,60 +7,8 @@
             "title": "Accounts",
             "type": "array",
             "description": "List of accounts to use for applying.",
-            "items": {
-                "type": "object",
-                "title": "Account",
-                "properties": {
-                    "name": {
-                        "title": "Account Name",
-                        "type": "string",
-                        "description": "Name of the account holder.",
-                        "editor": "textfield"
-                    },
-                    "username": {
-                        "title": "Username",
-                        "type": "string",
-                        "description": "Meroshare username (DP ID + Client ID is common, but this is the login username).",
-                        "editor": "textfield"
-                    },
-                    "password": {
-                        "title": "Password",
-                        "type": "string",
-                        "description": "Meroshare login password.",
-                        "editor": "textfield"
-                    },
-                    "crn": {
-                        "title": "CRN",
-                        "type": "string",
-                        "description": "C-ASBA Registration Number.",
-                        "editor": "textfield"
-                    },
-                    "pin": {
-                        "title": "Transaction PIN",
-                        "type": "string",
-                        "description": "4-digit Transaction PIN.",
-                        "editor": "textfield"
-                    },
-                    "dp_id": {
-                        "title": "DP ID",
-                        "type": "string",
-                        "description": "Depository Participant ID.",
-                        "editor": "textfield"
-                    },
-                    "bank_name": {
-                        "title": "Bank Name",
-                        "type": "string",
-                        "description": "Name of the bank to apply from (optional if only one bank).",
-                        "editor": "textfield"
-                    },
-                    "active": {
-                        "title": "Active",
-                        "type": "boolean",
-                        "description": "Whether to use this account for applications.",
-                        "default": true
-                    }
-                }
-            }
+            "editor": "json",
+            "default": []
         }
     }
 }
