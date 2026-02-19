@@ -28,7 +28,7 @@
                         "title": "Password",
                         "type": "string",
                         "description": "Meroshare login password.",
-                        "editor": "password"
+                        "editor": "textfield"
                     },
                     "crn": {
                         "title": "CRN",
@@ -40,7 +40,7 @@
                         "title": "Transaction PIN",
                         "type": "string",
                         "description": "4-digit Transaction PIN.",
-                        "editor": "password"
+                        "editor": "textfield"
                     },
                     "dp_id": {
                         "title": "DP ID",
