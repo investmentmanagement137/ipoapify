@@ -6,4 +6,6 @@ RUN pip install -r requirements.txt
 COPY src/ ./src/
 COPY .actor/ ./.actor/
 
-CMD ["python3", "src/main.py"]
+ENV PYTHONPATH "${PYTHONPATH}:/usr/src/app/src"
+
+CMD ["python3", "-m", "src.main"]

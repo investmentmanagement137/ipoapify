@@ -5,6 +5,16 @@ import os
 ACCOUNTS_FILE = "accounts.csv"
 COMPLETED_FILE = "history.csv"
 
+def log(message):
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    formatted_msg = f"[{timestamp}] {message}"
+    print(formatted_msg)
+    try:
+        with open("automation.log", "a", encoding='utf-8') as f:
+            f.write(formatted_msg + "\n")
+    except:
+        pass
+
 def load_accounts():
     accounts = []
     
@@ -44,16 +54,6 @@ def load_accounts():
     return accounts
 
 ACCOUNTS = load_accounts()
-
-def log(message):
-    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-    formatted_msg = f"[{timestamp}] {message}"
-    print(formatted_msg)
-    try:
-        with open("automation.log", "a", encoding='utf-8') as f:
-            f.write(formatted_msg + "\n")
-    except:
-        pass
 
 def update_account_status(username, key, value):
     """Update status in CSV. For simplicity, we write to the 'Status' column or just log."""
