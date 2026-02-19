@@ -4,6 +4,7 @@ banks_*.json
 *.log
 history.csv
 last_run.timestamp
+apify_input.json
 
 # Python
 __pycache__/

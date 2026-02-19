@@ -5,5 +5,5 @@
     "description": "Automatically applies for IPOs on Meroshare.",
     "version": "1.0",
     "input": "./input_schema.json",
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile"
 }

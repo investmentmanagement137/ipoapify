@@ -10,29 +10,47 @@
             "editor": "json",
             "items": {
                 "type": "object",
+                "title": "Account",
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "title": "Account Name",
+                        "type": "string",
+                        "editor": "textfield"
                     },
                     "username": {
-                        "type": "string"
+                        "title": "Username",
+                        "type": "string",
+                        "editor": "textfield"
                     },
                     "password": {
-                        "type": "string"
+                        "title": "Password",
+                        "type": "string",
+                        "editor": "textfield",
+                        "isSecret": true
                     },
                     "crn": {
-                        "type": "string"
+                        "title": "CRN",
+                        "type": "string",
+                        "editor": "textfield"
                     },
                     "pin": {
-                        "type": "string"
+                        "title": "Transaction PIN",
+                        "type": "string",
+                        "editor": "textfield",
+                        "isSecret": true
                     },
                     "dp_id": {
-                        "type": "string"
+                        "title": "DP ID",
+                        "type": "string",
+                        "editor": "textfield"
                     },
                     "bank_name": {
-                        "type": "string"
+                        "title": "Bank Name",
+                        "type": "string",
+                        "editor": "textfield"
                     },
                     "active": {
+                        "title": "Active",
                         "type": "boolean",
                         "default": true
                     }
